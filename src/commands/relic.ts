@@ -33,7 +33,6 @@ function relic(message: Discord.Message,args: Array<String>){
         });
         data = data.slice(0,20);
         console.log(data);
-        let planet = "";
         let i = 0;
         for (let placeDrop of data){                      
             resp += placeDrop.place +"\t\t\t\t"+placeDrop.chance+"%\n"; 
