@@ -43,7 +43,7 @@ client.on('message', message => {
     if (!command) return;
         
     if (args.length < command.args_length){
-        message.reply("Falta de argumentos\n O commando deve ser usado da seguinte forma -> "+command.help);
+        message.reply("Falta de algum argumento\n O commando deve ser usado da seguinte forma -> "+command.help);
         return;
     }
 
