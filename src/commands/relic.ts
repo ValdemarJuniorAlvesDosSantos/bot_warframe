@@ -1,6 +1,6 @@
 import * as Discord from 'discord.js';
 import api, { dropSearch } from "../api/warframe.api";
-import CommandInterface from "../CommandInterface";
+import CommandInterface from "./CommandInterface";
 
 function relic(message: Discord.Message,args: Array<String>){
     let defense = false;

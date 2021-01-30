@@ -1,5 +1,5 @@
 require("dotenv/config");
-import CommandInterface from './CommandInterface';
+import CommandInterface from './commands/CommandInterface';
 import  * as Discord from 'discord.js';
 import  * as fs from 'fs';
 
