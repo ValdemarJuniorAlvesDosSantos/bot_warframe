@@ -30,11 +30,7 @@ for (const file of commandFiles) {
 }
 client.on('message', message => {
     //message.channel.send("jaja Te respondo meu cumpadi");
-    if (message.content[0] !== prefix) {
-        console.log(`Bugado: ${message.content[0]}`)
-        console.log(`Bugado: ${message.channel}`)
-        return;
-    };
+    if (message.content[0] !== prefix) return;
     
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     
