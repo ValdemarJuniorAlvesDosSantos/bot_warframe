@@ -2,15 +2,19 @@ require("dotenv/config");
 import CommandInterface from './commands/CommandInterface';
 import  * as Discord from 'discord.js';
 import  * as fs from 'fs';
+import api from "./api/warframe.api";
 
 let token = process.env.TOKEN || "";
 let prefix = process.env.PREFIX || "#";
 
 const client = new Discord.Client();
 let commands = new Discord.Collection<string,CommandInterface>();
+let subscribesCetus: any[] = [];
+
+console.log('Iniciando Server')
 
 client.once('ready', () => {
-	console.log('Ready!');
+	console.log('Cliente do Discord Iniciado.');
 });
 
 
@@ -25,14 +29,26 @@ for (const file of commandFiles) {
     }   
 }
 client.on('message', message => {
-    
-    if (message.content[0] !== prefix) return;
+    //message.channel.send("jaja Te respondo meu cumpadi");
+    if (message.content[0] !== prefix) {
+        console.log(`Bugado: ${message.content[0]}`)
+        console.log(`Bugado: ${message.channel}`)
+        return;
+    };
     
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     
     let commandName = args.shift()
     if (commandName){
         commandName = commandName.toLowerCase() || " ";
+        console.log(commandName)
+        if (commandName === 'subscribecetus') {
+            subscribesCetus.push(message.channel);
+            message.channel.send("Inscrito em cetus!");
+            const channel: any =  message.channel;
+            console.log("Canal inscrito: " + channel.guild.name + " -> " + channel.name);
+            return;
+        }
     }else{
         return;
     }    
@@ -55,5 +71,26 @@ client.on('message', message => {
     }
 
 });
+
+setInterval(() => {
+    let messageResp: string = '';
+    api.get('pc/cetusCycle', {params: {language: 'pt'}}).then(response =>{
+        let minutes = response.data.shortString.split("m")[0];
+        switch (minutes) {
+            case '5':
+            case '10':
+            case '15':
+                subscribesCetus.forEach((channel)=>{
+                    channel.send(response.data.shortString);
+                });
+                break;        
+            default:
+                break;
+        } 
+    }).catch( err =>{
+        console.log(err);
+    });
+
+}, 60000);
 
 client.login(token);

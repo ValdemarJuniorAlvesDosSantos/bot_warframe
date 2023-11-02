@@ -14,7 +14,7 @@ function relic(message: Discord.Message,args: Array<String>){
         defense = true;
     }
     const query = args[0] + " " + args[1]+ " relic";
-    api.get(`drops/search/${query}`).then(response=>{
+    api.get(`drops/search/${query}`).then(response => {
         if (response.data.length == 0){
             message.channel.send("Nada encontradao!");
             return;
